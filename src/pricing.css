@@ -1,0 +1,364 @@
+body {
+    margin: 0;
+    font-family: "Montserrat", "sans-serif";
+  }
+
+  a {
+    color: black;
+  }
+  
+  header {
+    display: flex;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    justify-content: center;
+    align-items: center;
+    border-color: #000000;
+    background-color: #d5f9dd;
+    border-bottom: 2px solid black;
+  }
+  
+  header .layout_custom {
+    width: 100%;
+    max-width: 72rem;
+    margin: 0 auto;
+  }
+  
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    display: flex;
+    margin-left: 1.5rem;
+    flex: 1 1 0%;
+    justify-content: center;
+    align-items: center;
+    gap: 4rem;
+  }
+  
+  .container .items {
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .container .items:hover {
+    color: darkgrey;
+    transform: scale(1.1);
+  }
+  
+  .contact {
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+    margin-left: 1rem;
+    transition: color 0.3s ease;
+  }
+  
+  .contact:hover {
+    color: darkgrey;
+  }
+  
+  .btn-primary {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 9999px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-left: 3rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .btn-primary:hover {
+    background-color: "darkgrey";
+    transform: translateY(-3px);
+  }
+  
+  a,
+  button {
+    display: inline-block;
+    text-align: center;
+  }
+  
+  .nav {
+    display: flex;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    align-items: center;
+    border-radius: 9999px;
+    font-weight: 600;
+    color: #374151;
+    background-color: #ffffff;
+    border: 2px solid #000000;
+  }
+  
+  .nav .nav-text {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-weight: 700;
+    color: #000000;
+    background-color: #ffffff;
+  }
+
+  .pricing-section {
+    background: url('/dist/img/latar2.png') no-repeat center center;
+    background-size: cover;
+    position: relative;
+    padding: 50px 20px;
+}
+
+.pricing-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    z-index: -1;
+}
+
+.pricing-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.pricing-header h1 {
+    font-size: 2em;
+    font-weight: bold;
+    margin: 0;
+}
+
+.pricing-header p {
+    margin: 10px 0;
+    color: #555;
+}
+
+.pricing-cards {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    overflow: hidden;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-top {
+    text-align: center;
+    padding: 20px;
+    color: black;
+    font-weight: bold;
+}
+
+.card-top.basic {
+    background: rgba(213, 249, 221, 0.8);
+}
+
+.card-top.pro {
+    background: rgba(213, 249, 221, 0.8);
+}
+
+.card-top.enterprise {
+    background: rgba(213, 249, 221, 0.8);
+}
+
+.card-bottom {
+    background: rgba(104, 104, 104, 0.6);
+    text-align: center;
+    padding: 20px;
+}
+
+.card-bottom button {
+    background: black;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 25px;
+    font-size: 1em;
+    margin-top: 10px;
+    transition: background 0.3s;
+}
+
+.card-bottom button:hover {
+    background: #444;
+}
+
+
+  .footer_section {
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-left-width: 2px;
+    border-color: #000000;
+    background: #d6ecd2;
+  }
+  
+  .footer {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+    border-top-width: 2px;
+    border-color: #d1d5db;
+    color: #111827;
+  }
+  
+  .footer_section_1 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem;
+    max-width: 72rem;
+  
+    @media (min-width: 640px) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  
+    @media (min-width: 1024px) {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+  
+  .logo {
+    font-size: 1.525rem;
+    line-height: 1.75rem;
+    font-weight: 700;
+  }
+  
+  .logo_ {
+    margin-top: 1rem;
+    margin-top: 1rem;
+  }
+  
+  ul.logo_ li {
+    padding-top: 1rem;
+    font-weight: 600;
+  }
+  
+  .footer_0 {
+    display: flex;
+    justify-content: flex-end;
+    padding: 2rem;
+    background-color: #f6fff4;
+  }
+  
+  .footer_content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1rem;
+  }
+  
+  .icon_f {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 0.5rem;
+  }
+  
+  .icon_f1 {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .footer_img {
+    width: 2.5rem;
+    height: auto;
+  }
+  
+  .text_faq {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .fb {
+    font-weight: 700;
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: #000;
+  }
+  
+  .fb:hover {
+    text-decoration: underline;
+  }
+  
+  .bottom_links {
+    display: flex;
+    padding-top: 1rem;
+    margin-top: 2.5rem;
+    flex-direction: column;
+    justify-content: space-between;
+    border-top-width: 1px;
+    border-color: #d1d5db;
+    max-width: 72rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: #4b5563;
+  
+    @media (min-width: 640px) {
+      flex-direction: row;
+    }
+  }
+  
+  .bottom_ {
+    display: flex;
+    margin-left: 1rem;
+    gap: 3.25rem;
+    padding-bottom: 3.25rem;
+    font-weight: 600;
+    font-size: medium;
+  }
+  
+  .bottom_p {
+    margin-top: 1rem;
+    margin-left: 1rem;
+    color: gray;
+  
+    @media (min-width: 640px) {
+      margin-top: 0;
+    }
+  }
+  
+  .sosmed {
+    display: flex;
+    margin-top: 1rem;
+    margin-left: 1rem;
+  
+    @media (min-width: 640px) {
+      margin-top: 0;
+    }
+  }
+  
+  .sosmed_img {
+    display: inline-block;
+  }
+  
+  .size_sosmed {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-left: 1.5rem;
+  }

@@ -1,0 +1,90 @@
+/* Styling untuk Navbar */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #333;
+    padding: 10px 20px;
+}
+
+#navbar-title {
+    font-size: 18px;
+    color: white;
+    text-transform: capitalize;
+    margin: 0;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex; /* Mengatur menu dalam satu baris */
+    gap: 20px; /* Jarak antar menu */
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 10px 15px;
+}
+
+nav ul li a:hover {
+    background-color: #575757;
+    border-radius: 4px;
+}
+
+.container {
+    padding: 50px 15px;
+}
+/* footer */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+/* for buttonadd(tambah) && buttondelete(hapus) && buttonedit(edit) */
+.buttonadd{
+    background-color: #344ceb;
+    color: white;
+    padding: 20px;
+    width: 100%;
+    border-radius: 10px;
+    text-decoration: none;
+}
+.buttonedit{
+    color: #214429;
+    text-decoration: none;
+}
+.buttonhapus{
+    color: #b12a31;
+    text-decoration: none;
+}
+/* for table */
+table{
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 35px;
+}
+td,th{
+    border: 1px solid #ddd;
+    text-align: left;
+    padding: 8px;
+}
+tr:nth-child(even){
+    background-color: #ddd;
+}

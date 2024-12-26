@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Styling latar belakang */
+      body {
+        background-image: url("path/to/your-background-image.jpg");
+        background-size: cover;
+        background-position: center;
+      }
+    </style>
+  </head>
+  <body class="flex items-center justify-center min-h-screen bg-gray-900">
+    <!-- Kontainer Utama -->
+    <div
+      class="flex bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 shadow-lg max-w-4xl mx-auto"
+    >
+      <!-- Kolom Kiri: Gambar -->
+      <div class="flex items-center justify-center w-full">
+        <img
+          src="dist/img/Image.png"
+          alt="Illustration"
+          class="max-w-full rounded-lg"
+        />
+      </div>
+
+      <!-- Kolom Kanan: Form Login -->
+      <div class="w-full py-10 p-12">
+        <h2 class="text-5xl font-bold text-white text-center">Welcome Back!</h2>
+        <p class="text-2xl text-center text-gray-200 mb-8">
+          Please login to your account
+        </p>
+
+        <form action="backend/login.php" class="space-y-4" method="post">
+          <div>
+            <label class="text-sm text-gray-300" for="email"
+              >Enter your Username</label
+            >
+            <!-- Wrapper untuk ikon dan input email -->
+            <div
+              class="flex items-center border-b border-gray-300 mt-1 bg-transparent"
+            >
+              <input
+                type="text"
+                id="username"
+                class="w-full py-2 bg-transparent text-white focus:outline-none"
+                placeholder="Username"
+                name="username"
+                required
+              />
+            </div>
+          </div>
+
+          <div>
+            <label class="text-sm text-gray-300" for="password"
+              >Enter your password</label
+            >
+            <input
+              type="password"
+              id="password"
+              class="w-full py-2 mt-1 bg-transparent border-b border-gray-300 focus:outline-none focus:border-white text-white"
+              placeholder="Password"
+              name="password"
+              required
+            />
+            <a
+              href="#"
+              class="text-sm text-gray-300 float-right mt-2 hover:underline"
+              >Forgot password?</a
+            >
+          </div>
+          <div class="flex items-center mt-4">
+            <input
+              type="checkbox"
+              id="remember"
+              class="appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-transparent checked:bg-blue-500 checked:border-transparent focus:outline-none mr-2"
+            />
+            <label for="remember" class="text-sm text-gray-300"
+              >Keep me login</label
+            >
+          </div>
+
+          <button
+            type="submit"
+            class="w-full py-2 mt-6 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-full transition"
+          >
+            Login
+          </button>
+
+          <div
+            class="flex items-center justify-center mt-6 space-x-2 text-gray-300"
+          >
+            <span class="w-1/4 border-b border-gray-300"></span>
+            <span class="text-sm">Or login with</span>
+            <span class="w-1/4 border-b border-gray-300"></span>
+          </div>
+
+          <button
+            type="button"
+            class="w-full py-2 mt-4 flex items-center justify-center bg-white text-gray-700 font-semibold rounded-full border border-gray-300 transition hover:bg-gray-200"
+          >
+            <img
+              src="dist/img/google.png"
+              alt="Google"
+              class="w-5 h-5 mr-2"
+            />
+            Google
+          </button>
+
+          <p class="text-sm text-center text-gray-300 mt-6">
+            Don't have an account?
+            <a href="signup.html" class="text-white hover:underline">Sign up</a>
+          </p>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
