@@ -51,7 +51,7 @@ $role = $_SESSION['role'];
                 <tr>
                     <td><?php echo $key+1 ?></td>
                     <td><?php echo $row['nama_barang'] ?></td>
-                    <td><?php echo $row['harga'] ?></td>
+                    <td><?php echo number_format($row['harga'],3,',','.') ?></td>
                     <td>
                     <a href="edit.php?id=<?php echo $row['id_barang']; ?>" class="buttonedit">Edit</a>
                     <a href="delete.php?id=<?php echo $row['id_barang']; ?>" class="buttonhapus">Hapus</a>
