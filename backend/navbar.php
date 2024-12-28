@@ -19,6 +19,7 @@ $role = $_SESSION['role'];
     </nav>
 <?php elseif ($role == 'member'): ?>
     <nav>
+    <label for="username" id="navbar-title">KasirKu</label>
         <ul>
             <li><a href="/tugasweb/page-php/dashboard.php">Dashboard</a></li>
             <li><a href="/tugasweb/page-php/barang/index.php">Barang</a></li>
@@ -29,6 +30,7 @@ $role = $_SESSION['role'];
     </nav>
 <?php else: ?>
     <nav>
+    <label for="username" id="navbar-title">KasirKu</label>
     <ul>
         <li><a href="/tugasweb/page-php/dashboard.php">Dashboard</a></li>
         <li><a href="/tugasweb/backend/logout.php">Logout</a></li>

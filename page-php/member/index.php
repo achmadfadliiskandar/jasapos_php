@@ -32,7 +32,18 @@ include '../../backend/koneksi.php';
             </thead>
             <tbody>
                 <?php
-                $sql = "SELECT * FROM member";
+                $sql = "
+                    SELECT 
+                    member.id_member,
+                    member.nama_member, 
+                    member.alamat,
+                    member.telepon,
+                    member.id_paket,
+                    paket_member.durasi 
+                FROM 
+                    member
+                INNER JOIN paket_member ON member.id_paket = paket_member.id_paket
+                ";
                 $result = $conn->query($sql);
                 if ($result->num_rows > 0):
                     foreach ($result as $key => $row):
@@ -42,7 +53,7 @@ include '../../backend/koneksi.php';
                     <td><?php echo $row['nama_member'] ?></td>
                     <td><?php echo $row['alamat'] ?></td>
                     <td><?php echo $row['telepon'] ?></td>
-                    <td><?php echo $row['id_paket'] ?></td>
+                    <td><?php echo $row['durasi'] ?></td>
                     <td>
                         <a href="editmember.php?id=<?php echo $row['id_member']; ?>" class="buttonedit">Edit</a>
                         <a href="deletemember.php?id=<?php echo $row['id_member']; ?>" class="buttonhapus">Hapus</a>

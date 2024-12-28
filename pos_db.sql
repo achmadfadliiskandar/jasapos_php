@@ -13,13 +13,14 @@ CREATE TABLE `barang` (
   `nama_barang` varchar(100) NOT NULL,
   `harga` decimal(10,2) NOT NULL,
   `stok` int NOT NULL,
+  `id_user` int DEFAULT NULL,
   PRIMARY KEY (`id_barang`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO `barang` (`id_barang`, `nama_barang`, `harga`, `stok`) VALUES
-(12346,	'gelas stainless',	350.00,	10),
-(12348,	'komputer',	1000.00,	10),
-(12349,	'Baju bola manchester united',	30.00,	50);
+INSERT INTO `barang` (`id_barang`, `nama_barang`, `harga`, `stok`, `id_user`) VALUES
+(12346,	'gelas stainless',	350.00,	10,	1),
+(12348,	'komputer',	1000.00,	10,	1),
+(12349,	'Baju bola manchester united',	30.00,	50,	1);
 
 DROP TABLE IF EXISTS `detail_transaksi`;
 CREATE TABLE `detail_transaksi` (
@@ -49,6 +50,9 @@ CREATE TABLE `member` (
   CONSTRAINT `member_ibfk_1` FOREIGN KEY (`id_paket`) REFERENCES `paket_member` (`id_paket`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+INSERT INTO `member` (`id_member`, `nama_member`, `alamat`, `telepon`, `id_paket`) VALUES
+(3,	'member1',	'jalan batubara 30 jember',	'085646462323',	1),
+(4,	'member2',	'jalan kalisari 50 jaktim',	'082246314280',	2);
 
 DROP TABLE IF EXISTS `paket_member`;
 CREATE TABLE `paket_member` (
@@ -58,6 +62,10 @@ CREATE TABLE `paket_member` (
   PRIMARY KEY (`id_paket`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+INSERT INTO `paket_member` (`id_paket`, `durasi`, `harga`) VALUES
+(1,	'1 bulan',	250.00),
+(2,	'6 bulan',	1250.00),
+(3,	'12 bulan',	2500.00);
 
 DROP TABLE IF EXISTS `transaksi`;
 CREATE TABLE `transaksi` (
@@ -89,4 +97,4 @@ INSERT INTO `user` (`id_user`, `username`, `password`, `role`) VALUES
 (5,	'fadli',	'fadli123',	'guest'),
 (6,	'member2',	'member2',	'member');
 
--- 2024-12-27 13:25:05
+-- 2024-12-28 09:38:08

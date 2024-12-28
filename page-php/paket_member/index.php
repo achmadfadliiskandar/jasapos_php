@@ -38,7 +38,7 @@ include '../../backend/koneksi.php';
                 <tr>
                     <td><?php echo $key + 1 ?></td>
                     <td><?php echo $row['durasi'] ?></td>
-                    <td><?php echo $row['harga'] ?></td>
+                    <td><?php echo number_format($row['harga'],3,',','.') ?></td>
                     <td>
                         <a href="editpaket.php?id=<?php echo $row['id_paket']; ?>" class="buttonedit">Edit</a>
                         <a href="deletepaket.php?id=<?php echo $row['id_paket']; ?>" class="buttonhapus">Hapus</a>

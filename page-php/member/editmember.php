@@ -5,7 +5,11 @@ if (!isset($_SESSION['username'])) {
     exit;
 }
 include '../../backend/koneksi.php';
+
+// Ambil ID dari parameter URL
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+
+// Validasi dan ambil data member
 if ($id > 0) {
     $sql = "SELECT * FROM member WHERE id_member = ?";
     $stmt = $conn->prepare($sql);
@@ -23,14 +27,25 @@ if ($id > 0) {
     echo "<script>alert('ID tidak valid!'); window.location.href = 'index.php';</script>";
     exit;
 }
+
+// Query untuk mendapatkan data user dengan role 'member'
+$userQuery = "SELECT id_user, username FROM user WHERE role = 'member'";
+$userResult = $conn->query($userQuery);
+
+// Query untuk mendapatkan data paket
+$paketQuery = "SELECT id_paket, durasi FROM paket_member";
+$paketResult = $conn->query($paketQuery);
+
+// Proses update data
 if (isset($_POST['update'])) {
-    $nama_member = $_POST['nama_member'];
+    $id_user = $_POST['nama_member'];
     $alamat = $_POST['alamat'];
     $telepon = $_POST['telepon'];
     $id_paket = $_POST['id_paket'];
-    $updateSql = "UPDATE member SET nama_member = ?, alamat = ?, telepon = ?, id_paket = ? WHERE id_member = ?";
+
+    $updateSql = "UPDATE member SET id_user = ?, alamat = ?, telepon = ?, id_paket = ? WHERE id_member = ?";
     $updateStmt = $conn->prepare($updateSql);
-    $updateStmt->bind_param("sssii", $nama_member, $alamat, $telepon, $id_paket, $id);
+    $updateStmt->bind_param("issii", $id_user, $alamat, $telepon, $id_paket, $id);
     if ($updateStmt->execute()) {
         echo "<script>alert('Data member berhasil diperbarui!'); window.location.href = 'index.php';</script>";
     } else {
@@ -40,6 +55,7 @@ if (isset($_POST['update'])) {
 }
 $conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,7 +70,14 @@ $conn->close();
         <h1>Edit Member</h1>
         <form method="POST">
             <label for="nama_member">Nama Member</label>
-            <input type="text" id="nama_member" name="nama_member" value="<?php echo htmlspecialchars($member['nama_member']); ?>" required>
+            <select id="nama_member" name="nama_member" required>
+                <?php while ($user = $userResult->fetch_assoc()): ?>
+                    <option value="<?php echo $user['id_user']; ?>" 
+                        <?php echo $user['id_user'] == $member['nama_member'] ? 'selected' : ''; ?>>
+                        <?php echo htmlspecialchars($user['username']); ?>
+                    </option>
+                <?php endwhile; ?>
+            </select>
             <br><br>
             <label for="alamat">Alamat</label>
             <textarea id="alamat" name="alamat" required><?php echo htmlspecialchars($member['alamat']); ?></textarea>
@@ -62,8 +85,15 @@ $conn->close();
             <label for="telepon">Telepon</label>
             <input type="text" id="telepon" name="telepon" value="<?php echo htmlspecialchars($member['telepon']); ?>" required>
             <br><br>
-            <label for="id_paket">ID Paket</label>
-            <input type="number" id="id_paket" name="id_paket" value="<?php echo htmlspecialchars($member['id_paket']); ?>" required>
+            <label for="id_paket">Paket</label>
+            <select id="id_paket" name="id_paket" required>
+                <?php while ($paket = $paketResult->fetch_assoc()): ?>
+                    <option value="<?php echo $paket['id_paket']; ?>" 
+                        <?php echo $paket['id_paket'] == $member['id_paket'] ? 'selected' : ''; ?>>
+                        <?php echo htmlspecialchars($paket['durasi']); ?>
+                    </option>
+                <?php endwhile; ?>
+            </select>
             <br><br>
             <button type="submit" name="update">Update</button>
         </form>
