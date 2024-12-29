@@ -35,7 +35,7 @@
             Create your account
         </p>
 
-        <form action="#" class="space-y-4">
+        <form action="backend/register.php" class="space-y-4" method="post">
           <!-- Username Input -->
           <div>
             <label class="text-sm text-gray-300" for="username">Choose a username</label>
@@ -43,6 +43,7 @@
               <input
                 type="text"
                 id="username"
+                name="username"
                 class="w-full py-2 bg-transparent text-white focus:outline-none"
                 placeholder="Username"
                 required
@@ -51,7 +52,7 @@
           </div>
 
           <!-- Email Input -->
-          <div>
+          <!-- <div>
             <label class="text-sm text-gray-300" for="email">Enter your email</label>
             <div class="flex items-center border-b border-gray-300 mt-1 bg-transparent">
               <input
@@ -62,7 +63,7 @@
                 required
               />
             </div>
-          </div>
+          </div> -->
 
           <!-- Password Input -->
           <div>
@@ -70,6 +71,7 @@
             <input
               type="password"
               id="password"
+              name="password"
               class="w-full py-2 mt-1 bg-transparent border-b border-gray-300 focus:outline-none focus:border-white text-white"
               placeholder="Password"
               required
@@ -77,7 +79,7 @@
           </div>
 
           <!-- Confirm Password Input -->
-          <div>
+          <!-- <div>
             <label class="text-sm text-gray-300" for="confirm-password">Confirm your password</label>
             <input
               type="password"
@@ -86,9 +88,9 @@
               placeholder="Confirm Password"
               required
             />
-          </div>
+          </div> -->
 
-          <div class="flex items-center mt-4">
+          <!-- <div class="flex items-center mt-4">
             <input
               type="checkbox"
               id="agree"
@@ -96,11 +98,11 @@
               required
             />
             <label for="agree" class="text-sm text-gray-300">I agree to the Terms and Conditions</label>
-          </div>
+          </div> -->
 
           <button
             type="submit"
-            class="w-full py-2 mt-6 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-full transition"
+            class="w-full py-2 mt-6 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-full transition" name="signup"
           >
             Sign Up
           </button>

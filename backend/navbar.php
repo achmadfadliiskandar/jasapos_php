@@ -23,7 +23,7 @@ $role = $_SESSION['role'];
         <ul>
             <li><a href="/tugasweb/page-php/dashboard.php">Dashboard</a></li>
             <li><a href="/tugasweb/page-php/barang/index.php">Barang</a></li>
-            <li><a href="#">Cart</a></li>
+            <li><a href="/tugasweb/page-php/cart/index.php">Cart</a></li>
             <li><a href="/tugasweb/page-php/transaksi/index.php">Transaksi</a></li>
             <li><a href="/tugasweb/backend/logout.php">Logout</a></li>
         </ul>

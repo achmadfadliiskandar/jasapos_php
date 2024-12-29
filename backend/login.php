@@ -14,6 +14,7 @@ $result = $stmt->get_result();
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $_SESSION['username'] = $username;
+    $_SESSION['id_user'] = $row['id_user']; // Menyimpan id_user ke session
     $_SESSION['role'] = $row['role']; // Simpan role ke session
 
     header("Location: http://localhost/tugasweb/page-php/dashboard.php");

@@ -7,9 +7,9 @@ if (!isset($_SESSION['username'])) {
     exit;
 }
 
-// Mendapatkan role pengguna
+// Mendapatkan username dan ID user dari sesi
 $username = htmlspecialchars($_SESSION['username']);
-$role = $_SESSION['role'];
+$id_user = $_SESSION['id_user'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +28,7 @@ $role = $_SESSION['role'];
     <?php include '../../backend/navbar.php'; ?>
 
     <div class="container">
-        <h1>Data Barang : <?php echo $username; ?>!</h1>
+        <h1>Data Barang: <?php echo $username; ?>!</h1>
         <a href="./addbarang.php" class="buttonadd">Tambah</a>
         <table>
             <thead>
@@ -40,30 +40,43 @@ $role = $_SESSION['role'];
                 </tr>
             </thead>
             <tbody>
-                <!-- batas php untuk menampilkan data dengan koneksi.php -->
                 <?php
                 include '../../backend/koneksi.php';
-                $sql = "SELECT * FROM barang"; // Ganti dengan nama tabel Anda
-                $result = $conn->query($sql);
+
+                // Query hanya menampilkan barang berdasarkan ID user
+                $sql = "SELECT * FROM barang WHERE id_user = ?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("i", $id_user); // Menggunakan ID user dari sesi
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if ($result->num_rows > 0):
+                    foreach ($result as $key => $row):
                 ?>
-                <?php if($result->num_rows > 0): ?>
-                <?php foreach($result as $key => $row): ?>
                 <tr>
-                    <td><?php echo $key+1 ?></td>
-                    <td><?php echo $row['nama_barang'] ?></td>
-                    <td><?php echo number_format($row['harga'],3,',','.') ?></td>
+                    <td><?php echo $key + 1 ?></td>
+                    <td><?php echo htmlspecialchars($row['nama_barang']) ?></td>
+                    <td><?php echo number_format($row['harga'], 3, ',', '.') ?></td>
                     <td>
-                    <a href="edit.php?id=<?php echo $row['id_barang']; ?>" class="buttonedit">Edit</a>
-                    <a href="delete.php?id=<?php echo $row['id_barang']; ?>" class="buttonhapus">Hapus</a>
+                        <a href="edit.php?id=<?php echo $row['id_barang']; ?>" class="buttonedit">Edit</a>
+                        <a href="delete.php?id=<?php echo $row['id_barang']; ?>" class="buttonhapus">Hapus</a>
                     </td>
                 </tr>
-                <?php endforeach; ?>
-                <?php else: ?>
-                    <td colspan="3">Tabelnya Kosong</td>
-                <?php endif; ?>
+                <?php 
+                    endforeach;
+                else:
+                ?>
+                <tr>
+                    <td colspan="4">Tidak ada barang yang tersedia.</td>
+                </tr>
+                <?php 
+                endif;
+                $stmt->close();
+                $conn->close();
+                ?>
             </tbody>
         </table>
-
+        
     </div>
 
     <!-- Footer -->
