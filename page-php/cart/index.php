@@ -48,7 +48,7 @@ if (isset($_POST['add_to_cart'])) {
     }
 
     // Redirect kembali ke halaman cart
-    header("Location: cart.php");
+    header("Location: /tugasweb/page-php/cart");
     exit;
 }
 
@@ -91,7 +91,7 @@ $username = htmlspecialchars($_SESSION['username']);
                             <h5 style="text-transform: capitalize;"><?php echo $row['nama_barang']; ?></h5>
                             <p>Harga: <?php echo number_format($row['harga'], 3, ',', '.'); ?></p>
                             <p>Stok: <?php echo $row['stok']; ?></p>
-                            <form action="cart.php" method="POST">
+                            <form action="index.php" method="POST">
                                 <label for="jumlah">Jumlah:</label>
                                 <input type="number" name="jumlah" value="1" min="1" max="<?php echo $row['stok']; ?>" class="form-control">
                                 <input type="hidden" name="id_barang" value="<?php echo $row['id_barang']; ?>">
@@ -131,19 +131,29 @@ $username = htmlspecialchars($_SESSION['username']);
                                 <td>{$item['jumlah']}</td>
                                 <td>" . number_format($total_harga, 3, ',', '.') . "</td>
                                 <td>
-                                    <form action='update_cart.php' method='POST'>
+                                <form action='increment_cart.php' method='POST' style='display: inline;'>
+                                    <input type='hidden' name='index' value='$index'>
+                                    <button type='submit' name='increment_cart'>+</button>
+                                </form>
+                                <form action='decrement_cart.php' method='POST' style='display: inline;'>
+                                    <input type='hidden' name='index' value='$index'>
+                                    <button type='submit' name='decrement_cart'>-</button>
+                                </form>
+                                    <form action='remove_cart.php' method='POST'>
                                         <input type='hidden' name='index' value='$index'>
-                                        <button type='submit' name='update_cart' class='btn btn-warning btn-sm'>Update</button>
-                                    </form>
-                                    <form action='remove_from_cart.php' method='POST'>
-                                        <input type='hidden' name='index' value='$index'>
-                                        <button type='submit' name='remove_item' class='btn btn-danger btn-sm'>Remove</button>
+                                        <button type='submit' name='remove_cart' class='btn btn-danger btn-sm'>Remove</button>
                                     </form>
                                 </td>
                             </tr>";
                     }
                     echo "</tbody></table>";
                     echo "<p><strong>Total: " . number_format($total, 3, ',', '.') . "</strong></p>";
+                    echo "<form action='../transaksi/proses_transaksi.php' method='POST' style='margin-top: 20px;'>
+                            <button type='submit' name='buat_transaksi' class='buttonadd' style='padding: 10px 25px; color: white; border: none; cursor: pointer;'>
+                                Submit
+                            </button>
+                        </form>
+                    ";
                 } else {
                     echo "<p>Your cart is empty.</p>";
                 }
