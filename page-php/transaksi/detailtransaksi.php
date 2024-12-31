@@ -76,13 +76,13 @@ $result_detail = $stmt_detail->get_result();
                     <tr>
                         <td><?php echo $row['nama_barang']; ?></td>
                         <td><?php echo $row['kuantitas']; ?></td>
-                        <td><?php echo number_format($row['harga_satuan'], 2, ',', '.'); ?></td>
-                        <td><?php echo number_format($row['subtotal'], 2, ',', '.'); ?></td>
+                        <td><?php echo number_format($row['harga_satuan'], 3, ',', '.'); ?></td>
+                        <td><?php echo number_format($row['subtotal'], 3, ',', '.'); ?></td>
                     </tr>
                 <?php } ?>
                 <tr>
                     <td colspan="3"><strong>Total</strong></td>
-                    <td><strong><?php echo number_format($total_harga, 2, ',', '.'); ?></strong></td>
+                    <td><strong><?php echo number_format($total_harga, 3, ',', '.'); ?></strong></td>
                 </tr>
             </tbody>
         </table>

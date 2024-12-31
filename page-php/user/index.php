@@ -31,6 +31,8 @@ $role = $_SESSION['role'];
         <h1>Data User : <?php echo $username; ?>!</h1>
         <a href="./adduser.php" class="buttonadd">Tambah</a>
         <table>
+            <br>
+            <br>
             <thead>
                 <tr>
                     <th>Nomor</th>

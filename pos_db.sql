@@ -1,100 +1,236 @@
--- Adminer 4.8.4 MySQL 8.0.40-0ubuntu0.22.04.1 dump
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Waktu pembuatan: 30 Des 2024 pada 17.59
+-- Versi server: 10.4.28-MariaDB
+-- Versi PHP: 8.0.28
 
-SET NAMES utf8;
-SET time_zone = '+00:00';
-SET foreign_key_checks = 0;
-SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
 
-SET NAMES utf8mb4;
 
-DROP TABLE IF EXISTS `barang`;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `pos_db`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `barang`
+--
+
 CREATE TABLE `barang` (
-  `id_barang` int NOT NULL AUTO_INCREMENT,
+  `id_barang` int(11) NOT NULL,
   `nama_barang` varchar(100) NOT NULL,
   `harga` decimal(10,2) NOT NULL,
-  `stok` int NOT NULL,
-  `id_user` int DEFAULT NULL,
-  PRIMARY KEY (`id_barang`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `stok` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO `barang` (`id_barang`, `nama_barang`, `harga`, `stok`, `id_user`) VALUES
-(12346,	'gelas stainless',	350.00,	10,	1),
-(12348,	'komputer',	1000.00,	10,	1),
-(12349,	'Baju bola manchester united',	30.00,	50,	1);
+--
+-- Dumping data untuk tabel `barang`
+--
 
-DROP TABLE IF EXISTS `detail_transaksi`;
+INSERT INTO `barang` (`id_barang`, `nama_barang`, `harga`, `stok`) VALUES
+(1111, 'komputer', 10000000.00, 5);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `detail_transaksi`
+--
+
 CREATE TABLE `detail_transaksi` (
-  `id_detail` int NOT NULL AUTO_INCREMENT,
-  `id_transaksi` int DEFAULT NULL,
-  `id_barang` int DEFAULT NULL,
-  `kuantitas` int NOT NULL,
+  `id_detail` int(11) NOT NULL,
+  `id_transaksi` int(11) DEFAULT NULL,
+  `id_barang` int(11) DEFAULT NULL,
+  `kuantitas` int(11) NOT NULL,
   `harga_satuan` decimal(10,2) NOT NULL,
-  `subtotal` decimal(10,2) GENERATED ALWAYS AS ((`kuantitas` * `harga_satuan`)) STORED,
-  PRIMARY KEY (`id_detail`),
-  KEY `id_transaksi` (`id_transaksi`),
-  KEY `id_barang` (`id_barang`),
-  CONSTRAINT `detail_transaksi_ibfk_1` FOREIGN KEY (`id_transaksi`) REFERENCES `transaksi` (`id_transaksi`),
-  CONSTRAINT `detail_transaksi_ibfk_2` FOREIGN KEY (`id_barang`) REFERENCES `barang` (`id_barang`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `subtotal` decimal(10,2) GENERATED ALWAYS AS (`kuantitas` * `harga_satuan`) STORED
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Trigger `detail_transaksi`
+--
+DELIMITER $$
+CREATE TRIGGER `trg_reduce_stock` AFTER INSERT ON `detail_transaksi` FOR EACH ROW BEGIN
+    UPDATE barang
+    SET stok = stok - NEW.kuantitas
+    WHERE id_barang = NEW.id_barang;
+END
+$$
+DELIMITER ;
 
-DROP TABLE IF EXISTS `member`;
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `member`
+--
+
 CREATE TABLE `member` (
-  `id_member` int NOT NULL AUTO_INCREMENT,
+  `id_member` int(11) NOT NULL,
   `nama_member` varchar(100) NOT NULL,
   `alamat` text NOT NULL,
   `telepon` varchar(15) NOT NULL,
-  `id_paket` int DEFAULT NULL,
-  PRIMARY KEY (`id_member`),
-  KEY `id_paket` (`id_paket`),
-  CONSTRAINT `member_ibfk_1` FOREIGN KEY (`id_paket`) REFERENCES `paket_member` (`id_paket`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `id_paket` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO `member` (`id_member`, `nama_member`, `alamat`, `telepon`, `id_paket`) VALUES
-(3,	'member1',	'jalan batubara 30 jember',	'085646462323',	1),
-(4,	'member2',	'jalan kalisari 50 jaktim',	'082246314280',	2);
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `paket_member`;
+--
+-- Struktur dari tabel `paket_member`
+--
+
 CREATE TABLE `paket_member` (
-  `id_paket` int NOT NULL AUTO_INCREMENT,
+  `id_paket` int(11) NOT NULL,
   `durasi` enum('1 bulan','6 bulan','12 bulan') NOT NULL,
-  `harga` decimal(10,2) NOT NULL,
-  PRIMARY KEY (`id_paket`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `harga` decimal(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO `paket_member` (`id_paket`, `durasi`, `harga`) VALUES
-(1,	'1 bulan',	250.00),
-(2,	'6 bulan',	1250.00),
-(3,	'12 bulan',	2500.00);
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `transaksi`;
+--
+-- Struktur dari tabel `transaksi`
+--
+
 CREATE TABLE `transaksi` (
-  `id_transaksi` int NOT NULL AUTO_INCREMENT,
-  `id_user` int DEFAULT NULL,
-  `id_member` int DEFAULT NULL,
+  `id_transaksi` int(11) NOT NULL,
+  `id_user` int(11) DEFAULT NULL,
+  `id_member` int(11) DEFAULT NULL,
   `tanggal_transaksi` datetime NOT NULL,
-  `total` decimal(10,2) NOT NULL,
-  PRIMARY KEY (`id_transaksi`),
-  KEY `id_user` (`id_user`),
-  KEY `id_member` (`id_member`),
-  CONSTRAINT `transaksi_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`),
-  CONSTRAINT `transaksi_ibfk_2` FOREIGN KEY (`id_member`) REFERENCES `member` (`id_member`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `total` decimal(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `user`;
+--
+-- Struktur dari tabel `user`
+--
+
 CREATE TABLE `user` (
-  `id_user` int NOT NULL AUTO_INCREMENT,
+  `id_user` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `role` enum('admin','member','guest') NOT NULL,
-  PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `role` enum('admin','member','guest') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO `user` (`id_user`, `username`, `password`, `role`) VALUES
-(1,	'kasiradmin',	'kasirku',	'admin'),
-(2,	'member1',	'member1',	'member'),
-(5,	'fadli',	'fadli123',	'guest'),
-(6,	'member2',	'member2',	'member');
+--
+-- Indexes for dumped tables
+--
 
--- 2024-12-28 09:38:08
+--
+-- Indeks untuk tabel `barang`
+--
+ALTER TABLE `barang`
+  ADD PRIMARY KEY (`id_barang`);
+
+--
+-- Indeks untuk tabel `detail_transaksi`
+--
+ALTER TABLE `detail_transaksi`
+  ADD PRIMARY KEY (`id_detail`),
+  ADD KEY `id_transaksi` (`id_transaksi`),
+  ADD KEY `id_barang` (`id_barang`);
+
+--
+-- Indeks untuk tabel `member`
+--
+ALTER TABLE `member`
+  ADD PRIMARY KEY (`id_member`),
+  ADD KEY `id_paket` (`id_paket`);
+
+--
+-- Indeks untuk tabel `paket_member`
+--
+ALTER TABLE `paket_member`
+  ADD PRIMARY KEY (`id_paket`);
+
+--
+-- Indeks untuk tabel `transaksi`
+--
+ALTER TABLE `transaksi`
+  ADD PRIMARY KEY (`id_transaksi`),
+  ADD KEY `id_user` (`id_user`),
+  ADD KEY `id_member` (`id_member`);
+
+--
+-- Indeks untuk tabel `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id_user`);
+
+--
+-- AUTO_INCREMENT untuk tabel yang dibuang
+--
+
+--
+-- AUTO_INCREMENT untuk tabel `barang`
+--
+ALTER TABLE `barang`
+  MODIFY `id_barang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12346;
+
+--
+-- AUTO_INCREMENT untuk tabel `detail_transaksi`
+--
+ALTER TABLE `detail_transaksi`
+  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `member`
+--
+ALTER TABLE `member`
+  MODIFY `id_member` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `paket_member`
+--
+ALTER TABLE `paket_member`
+  MODIFY `id_paket` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `transaksi`
+--
+ALTER TABLE `transaksi`
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `user`
+--
+ALTER TABLE `user`
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+--
+
+--
+-- Ketidakleluasaan untuk tabel `detail_transaksi`
+--
+ALTER TABLE `detail_transaksi`
+  ADD CONSTRAINT `detail_transaksi_ibfk_1` FOREIGN KEY (`id_transaksi`) REFERENCES `transaksi` (`id_transaksi`),
+  ADD CONSTRAINT `detail_transaksi_ibfk_2` FOREIGN KEY (`id_barang`) REFERENCES `barang` (`id_barang`);
+
+--
+-- Ketidakleluasaan untuk tabel `member`
+--
+ALTER TABLE `member`
+  ADD CONSTRAINT `member_ibfk_1` FOREIGN KEY (`id_paket`) REFERENCES `paket_member` (`id_paket`);
+
+--
+-- Ketidakleluasaan untuk tabel `transaksi`
+--
+ALTER TABLE `transaksi`
+  ADD CONSTRAINT `transaksi_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`),
+  ADD CONSTRAINT `transaksi_ibfk_2` FOREIGN KEY (`id_member`) REFERENCES `member` (`id_member`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

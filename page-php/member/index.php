@@ -19,6 +19,8 @@ include '../../backend/koneksi.php';
     <div class="container">
         <h1>Data Member</h1>
         <a href="addmember.php" class="buttonadd">Tambah</a>
+        <br>
+        <br>
         <table>
             <thead>
                 <tr>

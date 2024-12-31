@@ -30,6 +30,8 @@ $id_user = $_SESSION['id_user'];
     <div class="container">
         <h1>Data Barang: <?php echo $username; ?>!</h1>
         <a href="./addbarang.php" class="buttonadd">Tambah</a>
+        <br>
+        <br>
         <table>
             <thead>
                 <tr>
